@@ -1,0 +1,61 @@
+---
+- name: Ensure polybar is installed
+  aur:
+    name: "{{ polybar_version | default('polybar') }}"
+  tags:
+    - install
+    - polybar
+
+- name: Gather power supply information [Battery]
+  when: 'polybar_power_supply_battery is undefined'
+  shell: >-
+    ls /sys/class/power_supply/ | grep BAT
+  register: polybar_power_supply_battery_full
+  tags:
+    - config
+    - polybar
+
+- name: Gather power supply information [Adapter]
+  when: 'polybar_power_supply_adapter is not defined'
+  shell: >-
+    ls /sys/class/power_supply/ | grep AC
+  register: polybar_power_supply_adapter_full
+  tags:
+    - config
+    - polybar
+
+- name: Gather network interfaces informantion [Ethernet]
+  when: 'polybar_net_interface_eth is not defined'
+  shell: >-
+    ip link | grep mode | sed 's/://g' |awk '{print $2}' | grep e
+  register: polybar_net_interface_eth_full
+  tags:
+    - config
+    - polybar
+
+- name: Gather network interfaces informantion [Wireless]
+  when: 'polybar_net_interface_wireless is not defined'
+  shell: >-
+    ip link | grep mode | sed 's/://g' |awk '{print $2}' | grep wl
+  register: polybar_net_interface_wireless_full
+  tags:
+    - config
+    - polybar
+
+- name: Generate polybar config
+  template:
+    src: config.j2
+    dest: "{{ polybar_config_path | default(ansible_env.HOME + '/.config/polybar/config', 'true') }}"
+    mode: 0755
+  tags:
+    - config
+    - polybar
+
+- name: Generate polybar launch script
+  template:
+    src: launch.sh.j2
+    dest: "{{ polybar_launch_path | default(ansible_env.HOME + '/.config/polybar/launch.sh', 'true')}}"
+    mode: 0755
+  tags:
+    - config
+    - polybar

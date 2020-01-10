@@ -1,0 +1,65 @@
+---
+polybar_version: polybar
+
+polybar_config_path:
+polybar_launch_path:
+
+polybar_colors:
+  base03: '#002b36'
+  base02: '#77000000'
+  base01: '#8E8E8E'
+  base00: '#657b83'
+  yellow: '#b58900'
+  orange: '#cb4b16'
+  red: '#9B3127'
+  magenta: '#d33682'
+  violet: '#6c71c4'
+  blue: '#268bd2'
+  cyan: '#2aa198'
+  green: '#859900'
+  black: '#000000'
+  white: '#FFFFFF'
+  gray: '#0f0f0f'
+
+polybar_bars:
+  - name: main
+    config:
+      width: 100%
+      height: 15
+      monitor: '${env:MONITOR:}'
+      background: '${colors.black}'
+      underline-size: 3
+      wm-restack: bswpm
+      tray-position: right
+      
+      font-0: NotoSans:pixelsize=10;0
+      font-1: FontAwesome:size=9;0
+      font-2: '"Wuncon Siji:pixelsize=8;0"'
+      
+      modules-left: powermenu lock bspwm xwindow
+      modules-center:
+      modules-right: battery backlight volume wired-network wireless-network date
+
+polybar_modules:
+  - name: bspwm
+    config:
+      type: internal/bspwm
+      ws-icon-0: "1;"
+      ws-icon-1: "2;"
+      ws-icon-2: "3;"
+      ws-icon-3: "4;"
+      ws-icon-4: "5;"
+      ws-icon-5: "6;"
+      ws-icon-6: "7;"
+      ws-icon-7: "8;"
+      ws-icon-8: "9;"
+      ws-icon-9: "10;"
+      ws-icon-default: 
+      pin-workspaces: false
+      label-mode: '%mode%'
+      label-mode-padding: 2
+      label-unfocused: '%icon%'
+      label-empty: 
+      label-focused-underline: '${colors.orange}'
+      label-focused-padding: 4
+      label-occupied-padding: 4

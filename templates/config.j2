@@ -1,0 +1,24 @@
+{% if polybar_header is defined %}
+{{ polybar_header }}
+{% endif %}
+
+[colors]
+{% for color, value in polybar_colors.items() %}
+{{ color }} = {{ value }}
+{% endfor %}
+
+{% for bar in polybar_bars %}
+[bar/{{ bar.name }}]
+{% for c, v in bar.config.items() %}
+{{ c }} = {{ v }}
+{% endfor %}
+
+{% endfor %}
+
+{% for module in polybar_modules %}
+[module/{{ module.name }}]
+{% for c, v in module.config.items() %}
+{{ c }} = {{ v }}
+{% endfor %}
+
+{% endfor %}
