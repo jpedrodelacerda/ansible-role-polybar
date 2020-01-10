@@ -1,12 +1,13 @@
 polybar
 =========
 
-A simple role for config and
+A simple role for installation and configuration of polybar.
 
 Requirements
 ------------
 
 Archlinux
+[Ansible AUR](https://github.com/kewlfft/ansible-aur)
 
 
 Role Variables
